@@ -1,0 +1,349 @@
+$date
+	Sat Oct 05 22:11:58 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 3 ! used [2:0] $end
+$var wire 1 " ret_rdy $end
+$var wire 1 # fl_vld $end
+$var wire 7 $ fl [6:0] $end
+$var parameter 32 % EN $end
+$var parameter 32 & L2_EN $end
+$var parameter 32 ' USED_WDT $end
+$var reg 1 ( clk $end
+$var reg 1 ) fl_rdy $end
+$var reg 7 * ret [6:0] $end
+$var reg 1 + ret_vld $end
+$var reg 1 , rst_n $end
+$scope module dut $end
+$var wire 1 ( clk $end
+$var wire 1 ) fl_rdy $end
+$var wire 1 - fl_strb $end
+$var wire 1 . flush $end
+$var wire 7 / ret [6:0] $end
+$var wire 1 0 ret_strb $end
+$var wire 1 + ret_vld $end
+$var wire 1 , rst_n $end
+$var wire 3 1 used [2:0] $end
+$var wire 7 2 fl [6:0] $end
+$var parameter 32 3 EN $end
+$var parameter 32 4 L2_EN $end
+$var parameter 32 5 USED_WDT $end
+$var reg 7 6 first_set [6:0] $end
+$var reg 1 # fl_vld $end
+$var reg 1 " ret_rdy $end
+$scope module set $end
+$var wire 7 7 set_in [6:0] $end
+$var wire 7 8 set_out [6:0] $end
+$var wire 7 9 C [6:0] $end
+$var parameter 32 : EN $end
+$scope begin genblk1[1] $end
+$var parameter 2 ; i0 $end
+$upscope $end
+$scope begin genblk1[2] $end
+$var parameter 3 < i0 $end
+$upscope $end
+$scope begin genblk1[3] $end
+$var parameter 3 = i0 $end
+$upscope $end
+$scope begin genblk1[4] $end
+$var parameter 4 > i0 $end
+$upscope $end
+$scope begin genblk1[5] $end
+$var parameter 4 ? i0 $end
+$upscope $end
+$scope begin genblk1[6] $end
+$var parameter 4 @ i0 $end
+$upscope $end
+$upscope $end
+$scope module used_cnt $end
+$var wire 1 ( clk $end
+$var wire 3 A cnt [2:0] $end
+$var wire 1 0 dec $end
+$var wire 1 B enable $end
+$var wire 1 - inc $end
+$var wire 1 , rst_n $end
+$var wire 3 C data_inc [2:0] $end
+$var wire 3 D data_dec [2:0] $end
+$var wire 3 E counter [2:0] $end
+$var parameter 32 F N_BITS $end
+$var reg 3 G next_count [2:0] $end
+$scope module cnt_out $end
+$var wire 1 ( clk $end
+$var wire 3 H data_in [2:0] $end
+$var wire 1 B enable $end
+$var wire 1 I expr $end
+$var wire 1 , rst_n $end
+$var parameter 32 J RESET_VAL $end
+$var parameter 1 K RST_N_EN $end
+$var parameter 32 L WIDTH $end
+$var reg 3 M data_out [2:0] $end
+$scope begin genblk1 $end
+$upscope $end
+$scope module m_ff_enable_assert $end
+$var wire 1 ( clk $end
+$var wire 1 I expr $end
+$var wire 1 , rst_n $end
+$var parameter 144 N MESSAGE $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope task t_fl $end
+$upscope $end
+$scope task t_ret $end
+$var reg 7 O ret_data [6:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b11011010101111101100110011001100010000001100101011011100110000101100010011011000110010100100000011010010111001100100000011110000010111101111010 N
+b11 L
+1K
+b0 J
+b11 F
+b110 @
+b101 ?
+b100 >
+b11 =
+b10 <
+b1 ;
+b111 :
+b11 5
+b11 4
+b111 3
+b11 '
+b11 &
+b111 %
+$end
+#0
+$dumpvars
+bx O
+bx M
+0I
+bx H
+bx G
+bx E
+bx D
+bx C
+0B
+bx A
+bx 9
+bx 8
+bx 7
+bx 6
+bx 2
+bx 1
+00
+bx /
+0.
+0-
+1,
+0+
+bx *
+0)
+0(
+bx $
+x#
+x"
+bx !
+$end
+#5
+b1 $
+b1 2
+b1 8
+b1111111 9
+b0 G
+b0 H
+b1111111 6
+b1111111 7
+1"
+1#
+b111 D
+b1 C
+b0 !
+b0 1
+b0 A
+b0 E
+b0 M
+0,
+1(
+#10
+0(
+#15
+1,
+1#
+1(
+#20
+0(
+#25
+1(
+#30
+0(
+#35
+1(
+#40
+0(
+#45
+1(
+#50
+0(
+#55
+1(
+#60
+0(
+#65
+1(
+#70
+0(
+#75
+1(
+#80
+0(
+#85
+1(
+#90
+0(
+#95
+1(
+#96
+1B
+b1 G
+b1 H
+1-
+1)
+#100
+0(
+#105
+b10 $
+b10 2
+b10 8
+b1111110 9
+b10 G
+b10 H
+b1111110 6
+b1111110 7
+b0 D
+b10 C
+b1 !
+b1 1
+b1 A
+b1 E
+b1 M
+1(
+#106
+0B
+0-
+0)
+#107
+1B
+1-
+1)
+#110
+0(
+#115
+b1111100 9
+b100 $
+b100 2
+b100 8
+b11 G
+b11 H
+b1111100 6
+b1111100 7
+b1 D
+b11 C
+b10 !
+b10 1
+b10 A
+b10 E
+b10 M
+1(
+#116
+0B
+0-
+b1 O
+0)
+#117
+1B
+b1 G
+b1 H
+10
+1+
+b1 *
+b1 /
+#120
+0(
+#125
+b1 $
+b1 2
+b1 8
+b1111111 9
+b0 G
+b0 H
+b1111101 6
+b1111101 7
+b0 D
+b10 C
+b1 !
+b1 1
+b1 A
+b1 E
+b1 M
+1(
+#126
+0B
+00
+0+
+#127
+1B
+b10 G
+b10 H
+1-
+1)
+#130
+0(
+#135
+b100 $
+b100 2
+b100 8
+b1111100 9
+b11 G
+b11 H
+b1111100 6
+b1111100 7
+b1 D
+b11 C
+b10 !
+b10 1
+b10 A
+b10 E
+b10 M
+1(
+#136
+0B
+0-
+0)
+#140
+0(
+#145
+1(
+#150
+0(
+#155
+1(
+#160
+0(
+#165
+1(
+#170
+0(
+#175
+1(
+#180
+0(
