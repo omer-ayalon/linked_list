@@ -1,3 +1,7 @@
+/*
+ * Author: Omer Ayalon
+ */
+ 
 module m_linked_list #(
     parameter WIDTH = 4,
     parameter DEPTH = 16,

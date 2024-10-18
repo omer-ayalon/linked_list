@@ -1,6 +1,6 @@
-/**
+/*
+ * Author: Omer Ayalon
  * @file m_assert.v
- * @brief Assertion Module
  * 
  * This module provides a simple assertion mechanism that can be used in 
  * digital designs to check for specific conditions during simulation. 

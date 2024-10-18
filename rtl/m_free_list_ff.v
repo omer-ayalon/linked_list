@@ -1,3 +1,7 @@
+/*
+ * Author: Omer Ayalon
+ */
+
 module m_free_list_ff #(
     parameter   EN = 64,        // Number of entries in the free list
 
@@ -16,25 +20,34 @@ module m_free_list_ff #(
     output [USED_WDT-1:0]              	used
 );
 
-reg     [EN-1:0]    first_set;
-
-// m_ff #(.RST_N_EN(1'b1),
-//        .WIDTH(EN),
-//        .RESET_VAL(1'b1)
-// ) set_one_hot (.clk(clk),
-//                .rst_n(rst_n),
-//                .enable(),
-//                .data_in(),
-//                .data_out()
-// );
+wire     [EN-1:0]   first_set;
+reg      [EN-1:0]   fl;
 
 reg                 fl_strb;
 reg                 ret_strb;
 reg                 fl_vld;
 reg                 ret_rdy;
 
-assign fl_strb  = fl_rdy  && fl_vld;
-assign ret_strb = ret_rdy && ret_vld;
+wire    [EN-1:0]    ret;
+wire                fl_rdy;
+wire                ret_vld;   
+
+assign fl_strb  = fl_rdy  & fl_vld;
+assign ret_strb = ret_rdy & ret_vld;
+
+generate
+for (genvar i0=0; i0<EN; i0=i0+1) begin : create_free_set
+m_ff #(.RST_N_EN(1),
+       .WIDTH(1),
+       .RESET_VAL(1'b1)
+) set_one_hot (.clk(clk),
+               .rst_n(rst_n & ~(ret_strb & ret[i0])),
+               .enable(fl[i0] & fl_strb),
+               .data_in(1'b0),
+               .data_out(first_set[i0])
+);
+end
+endgenerate
 
 m_counter #(.N_BITS(USED_WDT)
 ) used_cnt (
@@ -56,14 +69,6 @@ if (~rst_n) begin
 fl_vld = 0;
 ret_rdy = 1;
 fl_vld = 1;
-first_set = {EN{1'b1}};
 end
-
-always @(posedge clk)
-if (fl_strb) first_set <= first_set & ~fl;
-
-always @(posedge clk)
-if (ret_strb) first_set <= first_set | ret;
-
 
 endmodule

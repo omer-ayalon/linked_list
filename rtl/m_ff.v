@@ -1,4 +1,5 @@
 /**
+ * Author: Omer Ayalon
  * @file m_ff.v
  * 
  * This module implements a parameterized flip-flop that can be configured 
@@ -70,7 +71,7 @@ m_assert #(.MESSAGE("m_ff enable is x/z")
 
 generate
 if (RST_N_EN) begin
-always @(posedge clk or negedge rst_n)
+always @(posedge clk)
 if (~rst_n) data_out = RESET_VAL;
 else if (enable) data_out <= data_in;
 end

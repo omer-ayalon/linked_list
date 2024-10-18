@@ -1,4 +1,5 @@
-/**
+/*
+ * Author: Omer Ayalon
  * @file m_counter.v
  * 
  * This module implements an up/down counter that can be configured 

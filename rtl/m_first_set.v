@@ -1,3 +1,7 @@
+/*
+ * Author: Omer Ayalon
+ */
+
 module m_first_set #(
     parameter EN = 64
 )(
@@ -6,12 +10,13 @@ module m_first_set #(
 );
 
 reg     [EN-1:0]    C;
+reg     [EN-1:0]    set_out;
 
 assign C[0] = set_in[0];
 
 generate
-for (genvar i0=1; i0<EN; i0++) begin
-assign C[i0] = C[i0-1] || set_in[i0];
+for (genvar i0=1; i0<EN; i0=i0+1) begin
+assign C[i0] = C[i0-1] | set_in[i0];
 end
 endgenerate
 

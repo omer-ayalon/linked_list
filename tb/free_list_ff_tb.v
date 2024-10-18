@@ -1,9 +1,13 @@
+/*
+ * Author: Omer Ayalon
+ */
+
 module tb;
 
 // IO
-localparam EN = 7;
-localparam L2_EN = $clog2(EN);
-localparam USED_WDT = $clog2(EN+1);
+localparam  EN = 4;
+localparam  L2_EN = $clog2(EN);
+localparam  USED_WDT = $clog2(EN+1);
 
 reg		                clk;
 reg                     rst_n;
@@ -13,21 +17,23 @@ reg     [EN-1:0]        fl;
 reg                     ret_vld;
 wire                    ret_rdy;
 reg     [EN-1:0]        ret;
-wire    [USED_WDT-1:0]  used;    
+wire    [USED_WDT-1:0]  used;
 
 /////////////////////////////////////////////////////////
 // TEST
 /////////////////////////////////////////////////////////
+
+// test end
 initial begin
-repeat (10) @(posedge clk);
+repeat (10)@(posedge clk);
 
 t_fl();
 t_fl();
-t_ret(7'b0000001);
+t_fl();
+t_ret(4'b0010);
 t_fl();
 
-
-repeat (5) @(negedge clk);
+repeat (10)@(negedge clk);
 $display("Test completed");
 $finish;
 end
@@ -35,20 +41,21 @@ end
 /////////////////////////////////////////////////////////
 // TASKS
 /////////////////////////////////////////////////////////
+
 task t_fl;
 begin
 #1;
 fl_rdy = 1;
 repeat (1)@(posedge clk);
-#1;
 fl_rdy = 0;
+#1;
 end
 endtask
 
 task t_ret;
 input   [EN-1:0]    ret_data;
 begin
-#1
+#1;
 ret = ret_data;
 ret_vld = 1;
 repeat (1)@(posedge clk);

@@ -1,3 +1,7 @@
+/*
+ * Author: Omer Ayalon
+ */
+ 
 module tb;
 
 // IO
