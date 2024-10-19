@@ -41,24 +41,14 @@ parameter N_BITS=4
 );
 
 wire	[N_BITS-1:0]	counter;
-wire	[N_BITS-1:0]	data_inc;
-wire	[N_BITS-1:0]	data_dec;
-reg		[N_BITS-1:0]	next_count;
+wire    [N_BITS-1:0]	next_count;
 wire 					enable;
 
 /////////////////////////////////////////////////////////
 // Counter inc/dec select
 /////////////////////////////////////////////////////////
 
-assign data_inc = counter + 1;
-assign data_dec = counter - 1;
-
-// next_count = data_inc / data_dec -> according to inc and dec
-always @(*) begin
-if (!rst_n) next_count = counter;
-else if (inc) next_count = data_inc;
-else if (dec) next_count = data_dec;
-end
+assign next_count = counter + {N_BITS'(inc)} - {N_BITS'(dec)};
 
 /////////////////////////////////////////////////////////
 // Counter flip-flop

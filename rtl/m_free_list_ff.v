@@ -71,4 +71,37 @@ ret_rdy = 1;
 fl_vld = 1;
 end
 
+/////////////////////////////////////////////////////////
+// Asserts
+/////////////////////////////////////////////////////////
+// synopsys translate_off
+m_assert #(.MESSAGE("free list full & fifo counter not zero")
+) full_assert (
+    .clk(clk),
+    .rst_n(rst_n),
+    .expr(first_set == {EN{1'b1}} & used != 0)
+);
+
+m_assert #(.MESSAGE("ret value is already in free list")
+) double_ret_assert (
+    .clk(clk),
+    .rst_n(rst_n),
+    .expr((first_set & ret & ret_strb) != 0)
+);
+
+m_assert #(.MESSAGE("fl on empty first set")
+) fl_assert (
+    .clk(clk),
+    .rst_n(rst_n),
+    .expr(fl_strb & (used == EN))
+);
+
+m_assert #(.MESSAGE("ret on full first set")
+) ret_assert (
+    .clk(clk),
+    .rst_n(rst_n),
+    .expr(ret_strb & (used == 0))
+);
+// synopsys translate_on
+
 endmodule

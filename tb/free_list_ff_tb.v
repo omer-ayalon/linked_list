@@ -5,7 +5,7 @@
 module tb;
 
 // IO
-localparam  EN = 4;
+localparam  EN = 64;
 localparam  L2_EN = $clog2(EN);
 localparam  USED_WDT = $clog2(EN+1);
 
@@ -16,26 +16,81 @@ reg                     fl_rdy;
 reg     [EN-1:0]        fl;
 reg                     ret_vld;
 wire                    ret_rdy;
-reg     [EN-1:0]        ret;
+wire     [EN-1:0]       ret;
 wire    [USED_WDT-1:0]  used;
+
+reg     [USED_WDT-1:0]  fifo_count;
+reg                     fifo_full;
+reg                     fifo_empty;
 
 /////////////////////////////////////////////////////////
 // TEST
 /////////////////////////////////////////////////////////
 
-// test end
-initial begin
+integer rand_const = 0;
+always @(*) begin
+rand_const = (used==EN ? -15 : rand_const);
+end
+
+// random take from free list
+integer wait_cycles_fl;
+always @(posedge clk) begin
 repeat (10)@(posedge clk);
 
-t_fl();
-t_fl();
-t_fl();
-t_ret(4'b0010);
-t_fl();
+wait_cycles_fl = $random % (5+rand_const);
+if (wait_cycles_fl < 0) wait_cycles_fl = -wait_cycles_fl;
+repeat (wait_cycles_fl)@(posedge clk);
 
-repeat (10)@(negedge clk);
+if (used < EN) begin
+t_fl();
+end
+
+end
+
+
+// random return to free list
+integer wait_cycles_ret;
+always @(posedge clk) begin
+repeat (10)@(posedge clk);
+
+wait_cycles_ret = $random % (10+rand_const);
+if (wait_cycles_ret < 0) wait_cycles_ret = -wait_cycles_ret;
+repeat (wait_cycles_ret)@(posedge clk);
+
+if (used > 0) begin
+t_ret();
+end
+end
+
+// stop test
+initial begin
+repeat (100)@(posedge clk);
+while (1) begin  
+if (used == 0) begin
+repeat (1)@(posedge clk);
 $display("Test completed");
 $finish;
+end else begin
+repeat (1)@(posedge clk);
+end
+end
+end
+
+// time tracker
+// Time tracker process
+initial begin
+integer cycle_count = 0; // Initialize the cycle counter
+
+forever begin
+    @(posedge clk); // Wait for each positive edge of the clock
+    cycle_count = cycle_count + 1;
+    
+    // Every 100 clock cycles, update the same line
+    if (cycle_count % 2000 == 0) begin
+        $display("Time: %0t, Cycle Count: %0d", $time, cycle_count);
+        $fflush(); // Flush the output buffer to ensure immediate display
+    end
+end
 end
 
 /////////////////////////////////////////////////////////
@@ -53,20 +108,19 @@ end
 endtask
 
 task t_ret;
-input   [EN-1:0]    ret_data;
 begin
 #1;
-ret = ret_data;
 ret_vld = 1;
 repeat (1)@(posedge clk);
-#1;
 ret_vld = 0;
+#1;
 end
 endtask
 
 /////////////////////////////////////////////////////////
 // DUT
 /////////////////////////////////////////////////////////
+
 m_free_list_ff #(
     .EN(EN)
 ) dut (
@@ -81,6 +135,24 @@ m_free_list_ff #(
     .ret(ret),
     .used(used)
 );
+
+/////////////////////////////////////////////////////////
+// FIFO helper
+/////////////////////////////////////////////////////////
+
+m_fifo #(.WIDTH(EN),
+         .DEPTH(EN)
+) fifo (.clk(clk),
+        .rst_n(rst_n),
+        .push_enable(fl_rdy & fl_vld),
+        .push_data(fl),
+        .pop_enable(ret_vld & ret_rdy),
+        .pop_data(ret),
+        .item_count(fifo_count),
+        .full_flag(fifo_full),
+        .empty_flag(fifo_empty)
+);
+
 
 /////////////////////////////////////////////////////////
 // INIT
