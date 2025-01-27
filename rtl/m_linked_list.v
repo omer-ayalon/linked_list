@@ -15,7 +15,8 @@ module m_linked_list #(
     output [WIDTH-1:0]  	            pop,
     input                	            push_vld,
     output      						push_rdy,
-    input  [WIDTH-1:0] 	                push
+    input  [WIDTH-1:0] 	                push,
+    input                               trv_frw
 );
 
 

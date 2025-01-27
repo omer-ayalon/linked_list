@@ -20,6 +20,6 @@ assign C[i0] = C[i0-1] | set_in[i0];
 end
 endgenerate
 
-assign set_out = (~{C[EN-2:0], 1'b0} & set_in);
+assign set_out = (~C & set_in);
 
 endmodule

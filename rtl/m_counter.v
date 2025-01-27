@@ -37,18 +37,17 @@ parameter N_BITS=4
     input 				    rst_n,
     input				    inc,
     input                   dec,
-    output  [N_BITS-1:0]    cnt
+    output [N_BITS-1:0]     cnt
 );
 
-wire	[N_BITS-1:0]	counter;
-wire    [N_BITS-1:0]	next_count;
+wire [N_BITS-1:0]	    next_count;
 wire 					enable;
 
 /////////////////////////////////////////////////////////
 // Counter inc/dec select
 /////////////////////////////////////////////////////////
 
-assign next_count = counter + {N_BITS'(inc)} - {N_BITS'(dec)};
+assign next_count = cnt + {N_BITS'(inc)} - {N_BITS'(dec)};
 
 /////////////////////////////////////////////////////////
 // Counter flip-flop
@@ -63,12 +62,7 @@ m_ff #(.RST_N_EN(1'b1),
           .rst_n(rst_n),
           .enable(enable),
           .data_in(next_count),
-          .data_out(counter)
+          .data_out(cnt)
 );
- /////////////////////////////////////////////////////////
- // Counter output
- /////////////////////////////////////////////////////////
- 
-assign cnt = counter;
 
 endmodule

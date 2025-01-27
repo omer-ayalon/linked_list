@@ -5,7 +5,7 @@
 module tb;
 
 // IO
-localparam  EN = 64;
+localparam  EN = 4;
 localparam  L2_EN = $clog2(EN);
 localparam  USED_WDT = $clog2(EN+1);
 
@@ -76,8 +76,10 @@ end
 end
 end
 
-// time tracker
-// Time tracker process
+/////////////////////////////////////////////////////////
+// Lap tracker
+/////////////////////////////////////////////////////////
+
 initial begin
 integer cycle_count = 0; // Initialize the cycle counter
 
@@ -141,7 +143,9 @@ m_free_list_ff #(
 /////////////////////////////////////////////////////////
 
 m_fifo #(.WIDTH(EN),
-         .DEPTH(EN)
+         .DEPTH(EN),
+         .RST_N_EN(1'b1),
+         .RESET_VAL(1'b0)
 ) fifo (.clk(clk),
         .rst_n(rst_n),
         .push_enable(fl_rdy & fl_vld),
