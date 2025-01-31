@@ -79,10 +79,9 @@ end
 /////////////////////////////////////////////////////////
 // Lap tracker
 /////////////////////////////////////////////////////////
-
-initial begin
 integer cycle_count = 0; // Initialize the cycle counter
 
+initial begin
 forever begin
     @(posedge clk); // Wait for each positive edge of the clock
     cycle_count = cycle_count + 1;
@@ -131,7 +130,7 @@ m_free_list_ff #(
     .flush(1'b0),
     .fl_vld(fl_vld),
     .fl_rdy(fl_rdy),
-    .fl(fl),
+    .fl_data(fl),
     .ret_vld(ret_vld),
     .ret_rdy(ret_rdy),
     .ret(ret),
